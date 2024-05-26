@@ -1,0 +1,231 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "";
+}
+
+<div class="container-fluid bodycontainer" style="min-height:60vh">
+    <div class="body_layout row">
+        <div class="featured_blogs col-lg-9 col-md-9 col-sm-9 flex-lg-grow-1 flex-md-grow-1 flex-sm-grow-1">
+            <div class="blogs row">
+                <div class="blog_first_section col-lg-9 col-md-12">
+                    @if (Model.Latest_Featured != null)
+                    {
+                        <div class="mb-3 mt-3 p-1 border-bottom box-shadow ">
+                            <p class="text-primary-emphasis fw-bold category">@Model.Latest_Featured.Category.CategoryName.ToUpper()</p>
+                            <p class="text-secondary fw-bolder fs-5">@Model.Latest_Featured.Title</p>
+                            <div class="d-flex justify-content-between">
+                                <p class="author">@Model.Latest_Featured.Author</p>
+                                <p class="timeString">@Model.Latest_Featured.TimeString</p>
+                            </div>
+                            <img src="@Model.Latest_Featured.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
+                            <p class="text-secondary fw-bolder fs-6">@Model.Latest_Featured.Description</p>
+                            <a class="btn btn-outline-secondary mb-1 box-shadow" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@Model.Latest_Featured.Blog_Url">Read More</a>
+                        </div>
+
+                    }
+
+                    <div class="four_featured">
+                        <div class="row">
+                            @if (Model.Featured_Articles != null)
+                            {
+
+                                foreach (var featured in Model.Featured_Articles)
+                                {<div class="col-6 mb-3 border-bottom box-shadow">
+                                        <p class="text-primary-emphasis fw-bold category">@featured.Category.CategoryName.ToUpper()</p>
+                                        <p class="fw-bold title">@featured.Title</p>
+                                        <div class="d-flex justify-content-between">
+                                            <p class="author">@featured.Author</p>
+                                            <p class="timeString">@featured.TimeString</p>
+                                        </div>
+                                        <div class="last_four">
+                                            <img src="@featured.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
+                                            <a class="btn btn-outline-secondary my-2 box-shadow" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@featured.Blog_Url">Read More</a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="main_call_to_action row d-lg-none d-md-none d-sm-block mb-4">
+                    <div class="main_call_1 col">
+                        <p class="text-light fw-bolder">Subscribe To Our Channell 
+                        <span class="text-primary">Novitas24</span></p>
+                        <a class="btn btn-outline-primary" href="#footer">Subscribe</a>
+                    </div>
+
+                    <div class="main_call_2 col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label text-light" for="flexCheckDefault">
+                                Newsletter
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label text-light" for="flexCheckChecked">
+                                Email Marketing
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label text-light" for="flexCheckDefault">
+                                Exclusive Offers
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label text-light" for="flexCheckChecked">
+                                Events
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="blog_second_section col-lg-3 col-md-12 p-lg-3">
+                    <div class="row">
+                        <h5 class="fw-bold">Popular</h5>
+                        <hr>
+                        @if (Model.General_Articles != null)
+                        {
+                            foreach (var article in Model.General_Articles)
+                            {
+                                <div class="col-lg-12 col-md-6 mb-lg-2 border-bottom box-shadow">
+                                    <div class="">
+                                        <span class="text-primary-emphasis fw-bold category ">@article.Category.CategoryName.ToUpper()</span>
+                                        <p class="title">@article.Title</p>
+                                        <div class="d-flex justify-content-between">
+                                            <p class="author">@article.Author</p>
+                                            <p class="timeString">@article.TimeString</p>
+                                        </div>
+                                        <img src="@article.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
+                                        <a class="btn btn-outline-secondary my-2 box-shadow" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@article.Blog_Url">Read More</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="main_ col-12">
+                    <div class="main_call_to_action row">
+                        <div class="main_call_1 col">
+                            <p class="text-light fw-bolder">Subscribe To Our Channell <span class="text-primary">Novitas24</span></p>
+                            <a class="btn btn-outline-primary" href="#footer">Subscribe</a>
+                        </div>
+
+                        <div class="main_call_2 col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                <label class="form-check-label text-light" for="flexCheckDefault">
+                                    Newsletter
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <label class="form-check-label text-light" for="flexCheckChecked">
+                                    Email Marketing
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                <label class="form-check-label text-light" for="flexCheckDefault">
+                                    Exclusive Offers
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <label class="form-check-label text-light" for="flexCheckChecked">
+                                    Events
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="all_blogs mt-4">
+                        <div class="row">
+                            <h4 class="fw-bold">Latest</h4>
+                            <hr>
+                            @if (Model.General_Articles != null)
+                            {
+                                foreach (var generalArticle in @Model.General_Articles)
+                                {
+                                    <div class="col-6 my-3">
+                                        <div class="p-2 border-bottom box-shadow">
+                                            <p class="text-primary-emphasis fw-bold">@generalArticle.Category.CategoryName.ToUpper()</p>
+                                            <p class="fw-bold text-secondary fs-5">@generalArticle.Title</p>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="author">@generalArticle.Author</p>
+                                                <p class="timeString">@generalArticle.TimeString</p>
+                                            </div>
+                                            <img src="@generalArticle.Featured_Image_Url" class="w-100 h-auto" text="Image cap" />
+                                            <div class="">
+                                                <p class="fw-bolder text-secondary fs-6">@generalArticle.Description</p>
+                                                <a class="btn btn-outline-secondary box-shadow" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@generalArticle.Blog_Url">Read More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------sidebar----------------->
+        <div class="bg-black sidebar_socials col-1 d-lg-block d-md-block p-1">
+            <ul class="d-flex">
+                <li><a href=""><i class="fab fa-twitter me-1"></i>Twitter</a></li>
+                <li><a href=""><i class="fab fa-stack-overflow me-1"></i>Stack_Overflow</a></li>
+                <li><a href=""><i class="fab fa-github me-1"></i>Github</a></li>
+                <li><a href=""><i class="fab fa-linkedin me-1"></i>LinkedIn</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar col-lg-2 col-md-2 col-sm-2 px-0 py-3">
+            <div class="sidebar-menu">
+                <div class="sidebar_main d-flex flex-column justify-content-center">
+                    <div class="call_to_action_top mx-2 py-3">
+                        <div class="header_novitas flex-md-column">
+                            <h4 class="">Novitas24</h4>
+                            <p class="text-light">Stay Updated On Tech Trends</p>
+                        </div>
+                        <a class="btn btn-outline-light fw-bolder" href="#footer">Sign Up</a>
+                    </div>
+
+                    <div class="call_to_action">
+                        <div class="promo">
+                            <h4><i class="fa-solid fa-bacon"></i> Mundus </h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, nulla neque cupiditate debitis praesentium voluptatum!</p>
+                            <span class="my-2"><i class="fa-solid fa-arrow-down-long 2-xl"></i></span>
+                            <span class="mt-2"><a href="">Take A Look</a></span>
+                        </div>
+                    </div>
+                    <p class="call_paragraph">Join Our <a href="#footer" class="btn btn-primary">Novitas24</a></p>
+                    <div class="call_to_action"></div>
+                    <div class="call_to_action">
+                        <div class="promo">
+                            <h4><i class="fa-solid fa-bacon"></i> Mundus </h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, nulla neque cupiditate debitis praesentium voluptatum!</p>
+                            <span class="my-2"><i class="fa-solid fa-arrow-down-long 2-xl"></i></span>
+                            <span class="mt-2"><a href="">Take A Look</a></span>
+                        </div>
+                    </div>
+                    <div class="call_to_action"></div>
+                </div>
+            </div>
+        </div>
+        <!----------------------container_end-------------------->
+        <div class="bg-black sidebar_socials col-1 d-lg-block d-md-block p-1">
+            <ul class="d-flex">
+                <li><a href=""><i class="fab fa-twitter me-1"></i>Twitter</a></li>
+                <li><a href=""><i class="fab fa-stack-overflow me-1"></i>Stack_Overflow</a></li>
+                <li><a href=""><i class="fab fa-github me-1"></i>Github</a></li>
+                <li><a href=""><i class="fab fa-linkedin me-1"></i>LinkedIn</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>

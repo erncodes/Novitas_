@@ -1,0 +1,16 @@
+﻿@model Novitas_Blog.Models.View_Models.CreateCategoryRequest
+
+<div class="container bodycontainer">
+    <div>
+        <h3>Create A New Category For Your Blog</h3>
+    </div>
+    <form method="post">
+        <div class="mb-3">
+            <label for="category" class="form-label">Title</label>
+            <input type="text" class="form-control" id="category" asp-for="CategoryName">
+        </div>
+        <button type="submit" class="btn btn-primary" asp-action="Add">Submit</button>
+    </form>
+</div>
+
+

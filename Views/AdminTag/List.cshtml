@@ -1,0 +1,67 @@
+﻿@model IEnumerable<BlogTag>
+
+<div class="container bodycontainer pt-2">
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="my-3">
+            <form method="get" asp-controller="AdminTag" asp-action="List">
+                <div class="d-flex align-items-center justify-content-around w-auto">
+                    <input class="form-control me-2" name="searchQuery" placeholder="Search Tag Name" value="@ViewBag.searchQuery">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex w-100 mb-3">
+            <h4 class="fw-bolder">This Is A List Of Available Tags</h4>
+            <div class="m-lg-auto">
+                <a asp-action="Add" class="btn btn-secondary w-auto">Create New Tag</a>
+            </div>
+        </div>
+        <table class="w-100 table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        <td class="text-center">@tag.Id</td>
+                        <td class="text-center">@tag.Name</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-Id="@tag.Id">Edit</a>
+                                <form method="post" asp-action="Delete" asp-route-Id="@tag.Id">
+                                    <button class="btn btn-outline-danger ms-2" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="my-3">
+            <form method="get" asp-controller="AdminTag" asp-action="List">
+                <div class="d-flex align-items-center justify-content-around w-auto">
+                    <input class="form-control me-2" name="searchQuery" placeholder="Search Tag Name" value="@ViewBag.searchQuery">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex w-100 mb-3">
+            <h4 class="fw-bolder">No Tags Available With Search Term "@ViewBag.searchQuery""</h4>
+            <div class="m-lg-auto">
+                <a asp-action="Add" class="btn btn-secondary w-auto">Create New Tag</a>
+            </div>
+        </div>
+    }
+</div>
+

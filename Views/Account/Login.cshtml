@@ -1,0 +1,21 @@
+﻿@model LoginRequest
+
+<div class="container d-flex justify-content-center flex-column bodycontainer">
+    <h3>Login</h3>
+    <form method="post">
+        <div class="mb-3">
+            <input type="text" hidden class="form-control" id="returnUrl" asp-for="ReturnUrl">
+        </div> 
+        <div class="mb-3">
+            <label for="title" class="form-label">Username</label>
+            <input type="text" class="form-control" id="title" asp-for="Username">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" asp-action="Login">Login</button>
+    </form>
+</div>
+

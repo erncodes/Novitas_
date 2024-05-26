@@ -1,0 +1,209 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] Novitas_Blog</title>
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+</head>
+<body>
+    <div class="container-fluid fixed-top bg-white" id="navDiv">
+        <header>
+            <!-----------------------------top_navbar-------------------------------->
+            <nav class="navbar top_nav col-lg-6 justify-content-end col-sm-10 overflow-hidden ms-auto me-3">
+                <ul class="pe-3">
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <li><a class="nav-link" href="#"> @User?.Identity?.Name<span><i class="fa-solid fa-user"></i></span></a></li>
+
+                        <li><a class="nav-link" asp-controller="Account" asp-action="Logout">| Logout <span><i class="fa fa-sign-out"></i></span></a></li>
+                    }
+                    else
+                    {
+                        <li><a class="nav-link" asp-controller="Account" asp-action="Login">| Login <span><i class="fa-solid fa-user"></i></span></a></li>
+                        <li><a class="nav-link" asp-controller="Account" asp-action="Register">| Register <span><i class="fa-solid fa-clipboard-check"></i></span></a></li>
+
+                    }
+                    <li><a class="nav-link" href="">| Support <span><i class="fa-solid fa-question"></i></span></a></li>
+                    <li><a class="nav-link" href="">| Contribute <span><i class="fa-solid fa-heart"></i></span></a></li>
+                </ul>
+            </nav>
+
+            <!-----------------------------main_navbar_start-------------------------------->
+
+            <div class="main_nav row d-flex me-1">
+                <!-----------main_logo------------>
+
+                <div class="logo_div col">
+                    <a asp-controller="Home" asp-action="Index" class="logo">
+                        <h3 class="text-secondary fw-bold">Novitas<i class="fa-solid fa-code-fork text-primary-emphasis"></i></h3>
+                    </a>
+                </div>
+                <!-----------main_menu------------>
+
+                <div class="nav_div col-lg-9">
+                    <div class="main_menu col">
+                        <nav class="navbar navbar-expand-lg py-3">
+                            <div class="container-fluid">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse me-3" id="navbarSupportedContent">
+                                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+                                    {
+                                        <ul class="navbar-nav ms-3">
+                                            <li class="nav-item dropdown">
+                                                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Admin
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-dark">
+                                                    <li><a class="dropdown-item" asp-controller="AdminTag" asp-action="Add">New Tag</a></li>
+                                                    <li><a class="dropdown-item" asp-controller="AdminTag" asp-action="List">View All Tags</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item" asp-controller="AdminArticle" asp-action="Add">New Article</a></li>
+                                                    <li><a class="dropdown-item" asp-controller="AdminArticle" asp-action="List">View All Articles</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item" asp-controller="AdminCategory" asp-action="Add">New Category</a></li>
+                                                    <li><a class="dropdown-item" asp-controller="AdminCategory" asp-action="List">View All Categories</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item" asp-controller="AdminUser" asp-action="Index">View All Users</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    }
+
+                                    <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" asp-action="Index" asp-controller="Home">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">About</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Partners</a>
+                                        </li>
+                                    </ul>
+                                    <form class="d-flex ms-3 w-100" role="search">
+                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <!-----------------nav_categories-------------->
+                <div class="nav_categories col-lg-11 col-sm-11 ms-auto me-3">
+                    <ul>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Latest"><span>|</span> Latest </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Popular"><span>|</span> Popular </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Tech"><span>|</span> Tech </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Gadgets"><span>|</span> Gadgets </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Deals"><span>|</span> Deals </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Google"><span>|</span> Google </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Streaming"><span>|</span> Streaming </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Software"><span>|</span> Software </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="AI"><span>|</span> Artificial Intelligence </a></li>
+                        <li><a asp-controller="Article" asp-action="Search" asp-route-searchQuery="Review"><span>|</span> Reviews </a></li>
+                    </ul>
+                </div>
+                <!-----------------------------main_navbar_end-------------------------------->
+            </nav>
+        </header>
+        </div>
+        <div class="container-fluid col-12">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="footer text-muted" id="footer">
+            <div class="bg-secondary mx-4">
+                <div class="row align-items-center">
+                    <div class="col-lg-2 d-flex flex-column justify-content-start">
+                        <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active text-light fw-bolder" aria-current="page" asp-action="Index" asp-controller="Home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light fw-bolder" href="#">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light fw-bolder" href="#">Partners</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="logo_div col">
+                        <a asp-controller="Home" asp-action="Index" class="">
+                            <p class="text-primary fw-bold fs-1">Novitas<i class="fa-solid fa-code-fork text-primary-emphasis"></i></p>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="main_ py-2">
+                            <form method="post">
+                                <div class="row align-items-center">
+                                    <div class="main_call_1 col-6">
+                                        <div class="mb-2">
+                                            <label class="text-light fw-bolder">Email</label>
+                                            <input type="email" class="form-control" placeholder="e.g John@123.com" />
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="main_call_2 col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                            <label class="form-check-label text-light" for="flexCheckDefault">
+                                                Newsletter
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                            <label class="form-check-label text-light" for="flexCheckChecked">
+                                                Email Marketing
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                            <label class="form-check-label text-light" for="flexCheckDefault">
+                                                Exclusive Offers
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                            <label class="form-check-label text-light" for="flexCheckChecked">
+                                                Events
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="main_call_3 col">
+                                        <a class="btn btn-outline-primary">Submit</a>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

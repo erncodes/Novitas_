@@ -1,0 +1,29 @@
+﻿@model CreateUserRequest
+
+<div class="container d-flex flex-column justify-content-center bodycontainer">
+    <h3>Register</h3>
+    <form method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Username</label>
+            <input type="text" class="form-control" id="title" asp-for="Username">
+            <span asp-validation-for="Username"></span>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" asp-for="Email">
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" asp-for="Password"/>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm_password" asp-for="Confirm_Password">
+            <span asp-validation-for="Confirm_Password"></span>
+        </div>
+        <div asp-validation-summary="All"></div>
+        <button type="submit" class="btn btn-primary" asp-action="Register">Submit</button>
+    </form>
+</div>

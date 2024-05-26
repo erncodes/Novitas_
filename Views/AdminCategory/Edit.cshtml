@@ -1,0 +1,19 @@
+﻿@model Novitas_Blog.Models.View_Models.UpdateCategoryRequest
+
+<div class="container bodycontainer">
+    <div>
+        <h3>Category Update</h3>
+    </div>
+    <form method="post">
+        <div class="mb-3">
+            <label for="Id" class="form-label">Id</label>
+            <input disabled type="text" class="form-control" id="Id" asp-for="Id">
+        </div> 
+        <div class="mb-3">
+            <label for="categoryname" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="categoryname" asp-for="CategoryName">
+        </div>
+
+        <button type="submit" class="btn btn-primary" asp-action="Edit">Submit</button>
+    </form>
+</div>

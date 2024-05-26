@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BlogArticle>
+<div class="container bodycontainer pt-2">
+    @if (Model != null && Model.Any())
+    {
+        <p class="title mb-3">@ViewBag.searchQuery</p>
+        <div class="row">
+            @foreach (var article in Model)
+            {
+                <div class="col-lg-6 col-md-12 box-shadow">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <div class="d-flex justify-content-between">
+                                <p class="author">@article.Author</p>
+                                <p class="timeString">@article.TimeString</p>
+                            </div>
+                            <img src="@article.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
+                        </div>
+                        <div class="col-6">
+                            <p class="text-primary-emphasis fw-bold category">@article.Category.CategoryName.ToUpper()</p>
+                            <p class="text-secondary fw-bolder fs-5">@article.Title</p>
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-outline-secondary mb-1 box-shadow" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@article.Blog_Url">Read More</a>
+                        </div>
+                    </div>
+            </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="fw-bolder">Sorry, No articles yet in @ViewBag.searchQuery Category</p>
+    }
+</div>
+
+

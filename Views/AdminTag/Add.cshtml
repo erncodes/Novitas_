@@ -1,0 +1,16 @@
+﻿@model CreateTagRequest
+
+<div class="container bodycontainer">
+    <div>
+        <h3>Create A New Tag For Your Blog</h3>
+    </div>
+    <form method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" asp-for="Name">
+        </div>
+       
+        <button type="submit" class="btn btn-primary" asp-action="Add">Submit</button>
+    </form>
+</div>
+

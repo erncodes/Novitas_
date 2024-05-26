@@ -1,0 +1,19 @@
+﻿@model UpdateTagRequest
+
+<div class="container bodycontainer">
+    <div>
+        <h3>Tag Update</h3>
+    </div>
+    <form method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input disabled type="text" class="form-control" id="title" asp-for="Id">
+        </div> 
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" asp-for="Name">
+        </div>
+
+        <button type="submit" class="btn btn-primary" asp-action="Edit">Submit</button>
+    </form>
+</div>
