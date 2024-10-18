@@ -9,7 +9,6 @@ namespace Novitas_Blog.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly UserManager<IdentityUser> _userManager;
-
         public AdminUserController(IUserRepository userRepository, UserManager<IdentityUser> userManager)
         {
             this._userRepository = userRepository;
@@ -35,7 +34,7 @@ namespace Novitas_Blog.Controllers
                 return View(usersViewmodel);
             }
             return View();
-        } 
+        }
         [HttpPost]
         public async Task<IActionResult> Index(UserViewModel userViewModel)
         {
@@ -46,23 +45,23 @@ namespace Novitas_Blog.Controllers
             };
             var userCreation = await _userManager.CreateAsync(user, userViewModel.Password);
             var roles = new List<string> { "User" };
-            if(userCreation != null && userCreation.Succeeded)
+            if (userCreation != null && userCreation.Succeeded)
             {
                 if (userViewModel.IsAdmin && !userViewModel.IsSuperAdmin)
                 {
                     roles.Add("Admin");
                 }
-                else if(userViewModel.IsSuperAdmin && !userViewModel.IsAdmin)
+                else if (userViewModel.IsSuperAdmin && !userViewModel.IsAdmin)
                 {
                     roles.Add("SuperAdmin");
                 }
-                else if(!userViewModel.IsSuperAdmin && userViewModel.IsAdmin)
+                else if (!userViewModel.IsSuperAdmin && userViewModel.IsAdmin)
                 {
                     roles.Add("Admin");
                     roles.Add("SuperAdmin");
                 }
                 var userRoles = new IdentityResult();
-                if(roles.Count >= 2)
+                if (roles.Count >= 2)
                 {
                     userRoles = await _userManager.AddToRolesAsync(user, roles);
                     if (userRoles.Succeeded)
@@ -85,10 +84,10 @@ namespace Novitas_Blog.Controllers
         public async Task<IActionResult> Delete(Guid Id)
         {
             var user = await _userManager.FindByIdAsync(Id.ToString());
-            if(user != null)
+            if (user != null)
             {
                 var userDeletion = await _userManager.DeleteAsync(user);
-                if(userDeletion != null && userDeletion.Succeeded)
+                if (userDeletion != null && userDeletion.Succeeded)
                 {
                     return RedirectToAction("Index");
                 }

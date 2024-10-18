@@ -1,7 +1,7 @@
 ﻿@model LoginRequest
 
-<div class="container d-flex justify-content-center flex-column bodycontainer">
-    <h3>Login</h3>
+<div class="container d-flex justify-content-center flex-column bodycontainer col-5 card">
+    <h3 class="fw-bold">Login</h3>
     <form method="post">
         <div class="mb-3">
             <input type="text" hidden class="form-control" id="returnUrl" asp-for="ReturnUrl">
@@ -15,7 +15,7 @@
             <input type="password" class="form-control" id="password" asp-for="Password" />
             <span asp-validation-for="Password"></span>
         </div>
-        <button type="submit" class="btn btn-primary" asp-action="Login">Login</button>
+        <button type="submit" class="btn btn-primary mx-auto" asp-action="Login">Login</button>
     </form>
 </div>
 

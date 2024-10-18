@@ -10,7 +10,6 @@ namespace Novitas_Blog.Controllers
     public class AdminCategoryController : Controller
     {
         private readonly ICategoryRepository _categoryrepository;
-
         public AdminCategoryController(ICategoryRepository categoryrepository)
         {
             this._categoryrepository = categoryrepository;

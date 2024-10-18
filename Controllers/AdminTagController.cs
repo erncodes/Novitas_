@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Novitas_Blog.Models.Domain_Models;
 using Novitas_Blog.Models.View_Models;
 using Novitas_Blog.Repositories;
@@ -10,9 +9,8 @@ namespace Novitas_Blog.Controllers
     [Authorize]
     public class AdminTagController : Controller
     {
-        private readonly IBlogArticleRepository _blogArticleRepository;
         private readonly IBlogTagRepository _blogTagRepository;
-
+        private readonly IBlogArticleRepository _blogArticleRepository;
         public AdminTagController(IBlogArticleRepository blogArticleRepository, IBlogTagRepository blogTagRepository)
         {
             this._blogArticleRepository = blogArticleRepository;
@@ -32,11 +30,7 @@ namespace Novitas_Blog.Controllers
             };
 
             var createtag = await _blogTagRepository.AddAsync(newTag);
-            if (createtag != null)
-            {
-                return RedirectToAction("List");
-            }
-            return View();
+            return createtag != null ? RedirectToAction("List") : View();
         }
         [HttpGet]
         public async Task<IActionResult> Edit(Guid Id)
@@ -65,11 +59,7 @@ namespace Novitas_Blog.Controllers
             };
             var updatedTag = await _blogTagRepository.UpdateAsync(tag);
 
-            if (updatedTag != null)
-            {
-                return RedirectToAction("List");
-            }
-            return View(null);
+            return updatedTag != null ? RedirectToAction("List") : View(null);
         }
         [HttpGet]
         public async Task<IActionResult> List(string? searchQuery)
@@ -77,17 +67,12 @@ namespace Novitas_Blog.Controllers
             ViewBag.searchQuery = searchQuery;
             var tags = await _blogTagRepository.GetAllAsync(searchQuery);
             return View(tags);
-
         }
         [HttpPost]
         public async Task<IActionResult> Delete(Guid Id)
         {
             var tag = await _blogTagRepository.DeleteAsync(Id);
-            if (tag != null)
-            {
-                return RedirectToAction("List");
-            }
-            return View();
+            return tag != null ? RedirectToAction("List") : View();
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Novitas_Blog.Repositories
         public Task<IEnumerable<BlogArticle>> GetAllByCategoryAsync(string? searchQuery);
         public Task<BlogArticle?> GetBlogByIdAsync(Guid Id);
         public Task<BlogArticle?> GetBlogByHandleAsync(String urlHandle);
-
         public Task<BlogArticle> AddAsync(BlogArticle blogArticle);
         public Task<BlogArticle?> UpdateAsync(BlogArticle blogArticle);
         public Task<BlogArticle?> DeleteAsync(Guid Id);

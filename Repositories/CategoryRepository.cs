@@ -7,19 +7,16 @@ namespace Novitas_Blog.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly NovitasDBContext _novitasDBContext;
-
         public CategoryRepository(NovitasDBContext novitasDBContext)
         {
             _novitasDBContext = novitasDBContext;
         }
-
         public async Task<Category> AddAsync(Category category)
         {
             await _novitasDBContext.Categories.AddAsync(category);
             await _novitasDBContext.SaveChangesAsync();
             return category;
         }
-
         public async Task<Category> DeleteAsync(Guid Id)
         {
             var category = await _novitasDBContext.Categories.FirstOrDefaultAsync(x => x.Id == Id);
@@ -32,18 +29,12 @@ namespace Novitas_Blog.Repositories
             }
             return null;
         }
-
         public async Task<Category> GetCategoryByIdAsync(Guid Id)
         {
             var category = await _novitasDBContext.Categories.FindAsync(Id);
 
-            if (category != null)
-            {
-                return category;
-            }
-            return null;
+            return category != null ? category : null;
         }
-
         public async Task<IEnumerable<Category>> GetAllAsync(string? searchQuery)
         {
             var query = _novitasDBContext.Categories.AsQueryable();
@@ -53,7 +44,6 @@ namespace Novitas_Blog.Repositories
             }
             return await query.ToListAsync();
         }
-
         public async Task<Category> UpdateAsync(Category category)
         {
             var selectedCategory = await _novitasDBContext.Categories.FindAsync(category.Id);

@@ -10,17 +10,14 @@ namespace Novitas_Blog.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogArticleRepository _blogArticleRepository;
-
         public HomeController(ILogger<HomeController> logger, IBlogArticleRepository blogArticleRepository)
         {
             _logger = logger;
             this._blogArticleRepository = blogArticleRepository;
         }
-
         public async Task<IActionResult> Index()
         {
             var allArticles = await _blogArticleRepository.GetAllAsync(null);
-
             //Manipulating Published_Date & Description For Display Purposes
             foreach (var article in allArticles)
             {
@@ -34,7 +31,6 @@ namespace Novitas_Blog.Controllers
                     shorter = shorter.Insert(lastSpaceInDescription, " . . .");
                     article.Description = shorter;
                 }
-
                 DateTime Now = DateTime.Now;
                 DateTime publishedDate = article.Published_Date;
                 TimeSpan timeElapsed = Now - publishedDate;
@@ -49,13 +45,13 @@ namespace Novitas_Blog.Controllers
                         messageTime = "Just Now";
                         break;
                     case <= 59:
-                        messageTime = "Updated " + totalMinutes +"m ago";
+                        messageTime = "Updated " + totalMinutes + "m ago";
                         break;
                     case <= 1440:
-                        messageTime = "Updated " + totalMinutes/60 + "h ago";
+                        messageTime = "Updated " + (totalMinutes / 60) + "h ago";
                         break;
                     case <= 10080:
-                        messageTime = "Updated " + totalMinutes / 1440 + "d ago";
+                        messageTime = "Updated " + (totalMinutes / 1440) + "d ago";
                         break;
                     default:
                         messageTime = publishedDate.ToShortDateString();
@@ -64,10 +60,9 @@ namespace Novitas_Blog.Controllers
                 article.TimeString = messageTime;
 
             };
-            var generalArticles = (allArticles.Where(x => x.Is_Featured == false)).Take(4);
-            var allFeatured = (allArticles.Where(x => x.Is_Featured).OrderByDescending(x => x.Published_Date)).Skip(1).Take(4);
-            var latestFeatured = (allArticles.Where(x => x.Is_Featured).OrderByDescending(x => x.Published_Date)).First();
-
+            var generalArticles = allArticles.Where(x => x.Is_Featured == false).Take(4);
+            var allFeatured = allArticles.Where(x => x.Is_Featured).OrderByDescending(x => x.Published_Date).Skip(1).Take(4);
+            var latestFeatured = allArticles.Where(x => x.Is_Featured).OrderByDescending(x => x.Published_Date).First();
             var model = new HomeViewModel
             {
                 General_Articles = generalArticles,
@@ -77,13 +72,10 @@ namespace Novitas_Blog.Controllers
             return View(model);
         }
         [HttpGet]
-
         public IActionResult Privacy()
         {
             return View();
         }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

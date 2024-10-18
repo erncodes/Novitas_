@@ -49,7 +49,6 @@
             <label for="published_date" class="form-label">Published_Date</label>
             <input type="date" class="form-control" id="published_date" asp-for="Published_Date">
         </div>
-
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="isVisible" asp-for="Is_Visible">
             <label class="form-check-label" for="isVisible">Is Visible?</label>
@@ -63,14 +62,12 @@
             <select class="form-select" asp-items="@Model.Category" asp-for="Selected_Category" required>
             </select>
             <span class="text-danger fst-italic" asp-validation-for="Selected_Category"></span>
-
         </div>
         <div class="mb-3 form-check">
             <label class="form-label">Tags</label>
             <select multiple class="form-select" asp-items="@Model.Tags" asp-for="Selected_Tags">
             </select>
         </div>
-
         <button type="submit" class="btn btn-primary" asp-action="Edit">Submit</button>
     </form>
 </div>

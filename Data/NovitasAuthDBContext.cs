@@ -7,12 +7,10 @@ namespace Novitas_Blog.Data
     public class NovitasAuthDBContext : IdentityDbContext
     {
         public NovitasAuthDBContext(DbContextOptions<NovitasAuthDBContext> options) : base(options)
-        {
-        }
+        { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
             var userRoleId = "fcbc040e-3725-4a24-9dcc-d7f61532e4cb";
             var adminRoleId = "91e89623-04ac-45ed-a9ab-691729aa7695";
             var superAdminRoleId = "989c2b0c-f6a9-4cfa-8ef9-72484c5aa18e";
@@ -25,14 +23,14 @@ namespace Novitas_Blog.Data
                     NormalizedName = "SuperAdmin",
                     Id = superAdminRoleId,
                     ConcurrencyStamp = superAdminRoleId
-                },       
+                },
                 new IdentityRole
                 {
                     Name = "Admin",
                     NormalizedName = "Admin",
                     Id = adminRoleId,
                     ConcurrencyStamp = adminRoleId
-                },  
+                },
                 new IdentityRole
                 {
                     Name = "User",
@@ -63,12 +61,12 @@ namespace Novitas_Blog.Data
                 {
                     RoleId = superAdminRoleId,
                     UserId = superAdminId
-                },     
+                },
                 new IdentityUserRole<string>
                 {
                     RoleId = userRoleId,
                     UserId = superAdminId
-                },   
+                },
                 new IdentityUserRole<string>
                 {
                     RoleId = adminRoleId,
@@ -77,7 +75,6 @@ namespace Novitas_Blog.Data
             };
 
             builder.Entity<IdentityUserRole<string>>().HasData(superAdminUserRoles);
-
         }
     }
 }

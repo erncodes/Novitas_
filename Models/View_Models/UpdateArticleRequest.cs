@@ -19,7 +19,6 @@ namespace Novitas_Blog.Models.View_Models
         [Required]
         public string Author { get; set; }
         public DateTime Published_Date { get; set; }
-
         public bool Is_Visible { get; set; }
         public bool Is_Featured { get; set; } = false;
         public IEnumerable<SelectListItem> Category { get; set; }

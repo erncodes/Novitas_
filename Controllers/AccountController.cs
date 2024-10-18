@@ -8,8 +8,7 @@ namespace Novitas_Blog.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-
-        public AccountController(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
@@ -31,8 +30,8 @@ namespace Novitas_Blog.Controllers
             var userCreationResult = await _userManager.CreateAsync(user, createUserRequest.Password);
             if (userCreationResult.Succeeded)
             {
-                var roleIdentity = _userManager.AddToRoleAsync(user,"User");
-                if(roleIdentity.IsCompletedSuccessfully)
+                var roleIdentity = _userManager.AddToRoleAsync(user, "User");
+                if (roleIdentity.IsCompletedSuccessfully)
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -55,14 +54,10 @@ namespace Novitas_Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-            var loginResult = await _signInManager.PasswordSignInAsync(loginRequest.Username, loginRequest.Password,false,false);
+            var loginResult = await _signInManager.PasswordSignInAsync(loginRequest.Username, loginRequest.Password, false, false);
             if (loginResult.Succeeded)
             {
-                if (!string.IsNullOrWhiteSpace(loginRequest.ReturnUrl))
-                {
-                    return Redirect(loginRequest.ReturnUrl);
-                }
-                return RedirectToAction("Index","Home");
+                return !string.IsNullOrWhiteSpace(loginRequest.ReturnUrl) ? Redirect(loginRequest.ReturnUrl) : RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -70,7 +65,7 @@ namespace Novitas_Blog.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Novitas_Blog.Repositories
     public class BlogTagRepository : IBlogTagRepository
     {
         private readonly NovitasDBContext _novitasDBContext;
-
         public BlogTagRepository(NovitasDBContext novitasDBContext)
         {
             _novitasDBContext = novitasDBContext;
@@ -21,12 +20,10 @@ namespace Novitas_Blog.Repositories
         public async Task<BlogTag> UpdateAsync(BlogTag blogTag)
         {
             var selectedTag = await _novitasDBContext.BlogTags.FindAsync(blogTag.Id);
-
             if (selectedTag != null)
             {
                 selectedTag.Name = blogTag.Name;
                 selectedTag.Articles = blogTag.Articles;
-
                 await _novitasDBContext.SaveChangesAsync();
                 return selectedTag;
             }
@@ -48,13 +45,8 @@ namespace Novitas_Blog.Repositories
         {
             var tag = await _novitasDBContext.BlogTags.FindAsync(Id);
 
-            if (tag != null)
-            {
-                return tag;
-            }
-            return null;
+            return tag != null ? tag : null;
         }
-
         public async Task<IEnumerable<BlogTag>> GetAllAsync(string? searchQuery)
         {
             var query = _novitasDBContext.BlogTags.AsQueryable();

@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<BlogTag>
 
 <div class="container bodycontainer pt-2">
-
     @if (Model != null && Model.Any())
     {
         <div class="my-3">
@@ -25,7 +24,6 @@
                     <th class="text-center">Name</th>
                     <th class="text-center">Actions</th>
                 </tr>
-
             </thead>
             <tbody>
                 @foreach (var tag in Model)

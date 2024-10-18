@@ -12,7 +12,6 @@ namespace Novitas_Blog.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ICommentRepository _commentRepository;
-
         public ArticleController(IBlogArticleRepository blogArticleRepository,
             SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
             ICommentRepository commentRepository)
@@ -61,10 +60,10 @@ namespace Novitas_Blog.Controllers
                             messageTime = "Updated " + totalMinutes + "m ago";
                             break;
                         case <= 1440:
-                            messageTime = "Updated " + totalMinutes / 60 + "h ago";
+                            messageTime = "Updated " + (totalMinutes / 60) + "h ago";
                             break;
                         case <= 10080:
-                            messageTime = "Updated " + totalMinutes / 1440 + "d ago";
+                            messageTime = "Updated " + (totalMinutes / 1440) + "d ago";
                             break;
                         default:
                             messageTime = publishedDate.ToShortDateString();
@@ -110,8 +109,8 @@ namespace Novitas_Blog.Controllers
                     UserId = Guid.Parse(_userManager.GetUserId(User)),
                 };
 
-               var commentUpload = await _commentRepository.AddAsync(comment);
-                if(commentUpload != null)
+                var commentUpload = await _commentRepository.AddAsync(comment);
+                if (commentUpload != null)
                 {
                     return RedirectToAction("Index", "Article", new { urlHandle = articleDetailsViewModel.UrlHandle });
                 }
@@ -142,19 +141,17 @@ namespace Novitas_Blog.Controllers
                             messageTime = "Updated " + totalMinutes + "m ago";
                             break;
                         case <= 1440:
-                            messageTime = "Updated " + totalMinutes / 60 + "h ago";
+                            messageTime = "Updated " + (totalMinutes / 60) + "h ago";
                             break;
                         case <= 10080:
-                            messageTime = "Updated " + totalMinutes / 1440 + "d ago";
+                            messageTime = "Updated " + (totalMinutes / 1440) + "d ago";
                             break;
                         default:
                             messageTime = publishedDate.ToShortDateString();
                             break;
                     }
                     article.TimeString = messageTime;
-
                 };
-
                 return View(articles);
             }
             return View();
