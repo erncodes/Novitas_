@@ -28,11 +28,13 @@ namespace Novitas_Blog.Controllers
             if (mainArticle != null)
             {
                 var allArticles = await _blogArticleRepository.GetAllAsync(null);
-                var relatedArticle = allArticles.Where(x => x.Category == mainArticle.Category).Take(4);
+                var relatedArticle = allArticles.Where(x => x.Category == mainArticle.Category && x.Id != mainArticle.Id).Take(4);
+                GetTimeArticle(mainArticle);
+
                 string shorternedDescription = "";
                 var lastSpaceInDescription = 0;
 
-                foreach (var article in allArticles)
+                foreach (var article in relatedArticle)
                 {
                     if (article.Description.Length >= 150)
                     {
@@ -43,33 +45,7 @@ namespace Novitas_Blog.Controllers
                         article.Description = shorternedDescription;
                     }
 
-                    DateTime Now = DateTime.Now;
-                    DateTime publishedDate = article.Published_Date;
-                    TimeSpan timeElapsed = Now - publishedDate;
-                    int totalMinutes = (int)timeElapsed.TotalMinutes;
-                    int totalHours
-                        = (int)timeElapsed.TotalMinutes;
-                    string messageTime = "";
 
-                    switch (totalMinutes)
-                    {
-                        case <= 15:
-                            messageTime = "Just Now";
-                            break;
-                        case <= 59:
-                            messageTime = "Updated " + totalMinutes + "m ago";
-                            break;
-                        case <= 1440:
-                            messageTime = "Updated " + (totalMinutes / 60) + "h ago";
-                            break;
-                        case <= 10080:
-                            messageTime = "Updated " + (totalMinutes / 1440) + "d ago";
-                            break;
-                        default:
-                            messageTime = publishedDate.ToShortDateString();
-                            break;
-                    }
-                    article.TimeString = messageTime;
                 };
                 var comments = await _commentRepository.GetCommentsAsync(mainArticle.Id);
                 var updatedCommentsViews = new List<CommentView>();
@@ -156,6 +132,37 @@ namespace Novitas_Blog.Controllers
             }
             return View();
         }
+        public string GetTimeArticle(BlogArticle article)
+        {
+            DateTime Now = DateTime.Now;
+            DateTime publishedDate = article.Published_Date;
+            TimeSpan timeElapsed = Now - publishedDate;
+            int totalMinutes = (int)timeElapsed.TotalMinutes;
+            int totalHours
+                = (int)timeElapsed.TotalMinutes;
+            string messageTime = "";
+
+            switch (totalMinutes)
+            {
+                case <= 15:
+                    messageTime = "Just Now";
+                    break;
+                case <= 59:
+                    messageTime = "Updated " + totalMinutes + "m ago";
+                    break;
+                case <= 1440:
+                    messageTime = "Updated " + (totalMinutes / 60) + "h ago";
+                    break;
+                case <= 10080:
+                    messageTime = "Updated " + (totalMinutes / 1440) + "d ago";
+                    break;
+                default:
+                    messageTime = publishedDate.ToShortDateString();
+                    break;
+            }
+            return article.TimeString = messageTime;
+        }
+
 
     }
 }

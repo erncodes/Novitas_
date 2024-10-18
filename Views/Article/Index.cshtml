@@ -3,17 +3,20 @@
 @inject SignInManager<IdentityUser> signInManager 
 <div class="container-fluid bodycontainer">
     <div class="row py-1">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-12 p-4">
-            <h3 class="title mb-4">@Model.MainArticle.Title</h3>
-            <div class="p-4">
-                <img src="@Model.MainArticle.Featured_Image_Url" width="100" class="card-img-bottom" text="Image cap" />
+        <div class="col-lg-9 col-md-9 col-sm-9 col-12 d-flex flex-column align-items-center ps-5 pt-2" id="main-article-content">
+            <h4 class="fw-bold align-self-start">@Model.MainArticle.Title</h4>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-12 mb-2">
+                <div class="d-flex justify-content-between">
+                    <p class="author">@Model.MainArticle.Author</p>
+                    <p class="timeString">@Model.MainArticle.TimeString</p>
+                </div>
+                <img src="@Model.MainArticle.Featured_Image_Url" class="img-fluid article" text="Image cap" />
             </div>
-            <p class="fw-bolder">@Model.MainArticle.Description</p>
-            <p class="author">@Model.MainArticle.Author</p>
-            <p class="timeString">@Model.MainArticle.TimeString</p>
-            <p>@Html.Raw(Model.MainArticle.Content)</p>
-            <div>
-                <p>@Model.MainArticle.Content</p>
+            <div class="fr-view">
+                <h6 class="fw-bold">@Model.MainArticle.Description</h6>
+                <p>@Html.Raw(Model.MainArticle.Content)</p>
+            </div>
+            <div class="w-100">
                 @if (Model.Comments != null)
                 {
                     <p>Comments</p>
@@ -32,7 +35,7 @@
             </div>
             @if (signInManager.IsSignedIn(User) && Model.MainArticle != null)
             {
-                <form method="post">
+                <form method="post" class="w-100">
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="id" asp-for="@Model.MainArticle.Id">
                         <input type="hidden" class="form-control" id="url" asp-for="@Model.MainArticle.Blog_Url">
@@ -66,3 +69,6 @@
         </div>
     </div>
 </div>
+<script>
+
+</script>

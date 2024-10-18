@@ -44,7 +44,7 @@ namespace Novitas_Blog.Repositories
         }
         public async Task<BlogArticle?> DeleteAsync(Guid Id)
         {
-            var article = await _novitasDBContext.Articles.FindAsync(Id);
+            var article = await _novitasDBContext.Articles.FirstOrDefaultAsync(x => x.Id == Id);
 
             if (article != null)
             {

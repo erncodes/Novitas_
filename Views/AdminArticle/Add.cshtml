@@ -62,10 +62,11 @@
 </div>
 @section Scripts{
     <script>
+      
         var editor = new FroalaEditor("#content", {
-            imageUploadURL: '/api/Image'
+            imageUploadURL: '/api/Image',
         });
-
+       
         let fileElement = document.getElementById("featured_image");
         let featuredImageUrl = document.getElementById("featured_image_url");
         let imageDisplay = document.getElementById("image_Display");

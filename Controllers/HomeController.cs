@@ -60,14 +60,18 @@ namespace Novitas_Blog.Controllers
                 article.TimeString = messageTime;
 
             };
-            var generalArticles = allArticles.Where(x => x.Is_Featured == false).Take(4);
+            var allOrderedGeneralArticles = allArticles.Where(x => x.Is_Featured == false).OrderByDescending(x => x.Published_Date);
+            var generalArticles = allArticles.Where(x => x.Is_Featured == false).OrderByDescending(x => x.Published_Date).Take(4);
+            var latestlArticles = allOrderedGeneralArticles.Count() > 4 ?
+                allArticles.Where(x => x.Is_Featured == false).OrderByDescending(x => x.Published_Date).Skip(4).Take(8) : allOrderedGeneralArticles;
             var allFeatured = allArticles.Where(x => x.Is_Featured).OrderByDescending(x => x.Published_Date).Skip(1).Take(4);
             var latestFeatured = allArticles.Where(x => x.Is_Featured).OrderByDescending(x => x.Published_Date).First();
             var model = new HomeViewModel
             {
                 General_Articles = generalArticles,
                 Featured_Articles = allFeatured,
-                Latest_Featured = latestFeatured
+                Latest_Featured = latestFeatured,
+                Latest_General = latestlArticles
             };
             return View(model);
         }

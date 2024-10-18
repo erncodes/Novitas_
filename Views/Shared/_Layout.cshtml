@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+    <link href="../css/froala_style.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="container-fluid fixed-top bg-white" id="navDiv">
@@ -121,89 +121,89 @@
                 <!-----------------------------main_navbar_end-------------------------------->
             </nav>
         </header>
-        </div>
-        <div class="container-fluid col-12">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
+    </div>
+    <div class="container-fluid col-12">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
 
-        <footer class="footer text-muted" id="footer">
-            <div class="bg-secondary mx-4">
-                <div class="row align-items-center">
-                    <div class="col-lg-2 d-flex flex-column justify-content-start">
-                        <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active text-light fw-bolder" aria-current="page" asp-action="Index" asp-controller="Home">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light fw-bolder" href="#">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light fw-bolder" href="#">Partners</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="logo_div col">
-                        <a asp-controller="Home" asp-action="Index" class="">
-                            <p class="text-primary fw-bold fs-1">Novitas<i class="fa-solid fa-code-fork text-primary-emphasis"></i></p>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-7">
-                        <div class="main_ py-2">
-                            <form method="post">
-                                <div class="row align-items-center">
-                                    <div class="main_call_1 col-6">
-                                        <div class="mb-2">
-                                            <label class="text-light fw-bolder">Email</label>
-                                            <input type="email" class="form-control" placeholder="e.g John@123.com" />
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                    <div class="main_call_2 col">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label text-light" for="flexCheckDefault">
-                                                Newsletter
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                            <label class="form-check-label text-light" for="flexCheckChecked">
-                                                Email Marketing
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label text-light" for="flexCheckDefault">
-                                                Exclusive Offers
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                            <label class="form-check-label text-light" for="flexCheckChecked">
-                                                Events
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="main_call_3 col">
-                                        <a class="btn btn-outline-primary">Submit</a>
+    <footer class="footer text-muted" id="footer">
+        <div class="bg-secondary px-4">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-6 d-flex flex-column">
+                    <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active text-muted fw-bold" aria-current="page" asp-action="Index" asp-controller="Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-muted fw-bold" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-muted fw-bold" href="#">Partners</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logo_div col-lg-3 col-md-3 col-sm-3 col-6">
+                    <a asp-controller="Home" asp-action="Index" class="">
+                        <p class="text-primary fw-bold fs-1">Novitas<i class="fa-solid fa-code-fork text-primary-emphasis"></i></p>
+                    </a>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-3 col-12">
+                    <div class="main_ py-2">
+                        <form method="post">
+                            <div class="row align-items-center">
+                                <div class="main_call_1 col-6">
+                                    <div class="mb-2">
+                                        <label class="text-light fw-bolder">Email</label>
+                                        <input type="email" class="form-control" placeholder="e.g John@123.com" />
+                                        <span></span>
                                     </div>
                                 </div>
+                                <div class="main_call_2 col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label text-light" for="flexCheckDefault">
+                                            Newsletter
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                        <label class="form-check-label text-light" for="flexCheckChecked">
+                                            Marketing
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label text-light" for="flexCheckDefault">
+                                            Exclusive Offers
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                        <label class="form-check-label text-light" for="flexCheckChecked">
+                                            Events
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="main_call_3 col">
+                                    <a class="btn btn-outline-primary">Submit</a>
+                                </div>
+                            </div>
 
-                            </form>
+                        </form>
 
-                        </div>
                     </div>
                 </div>
-                </div>
-        </footer>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
