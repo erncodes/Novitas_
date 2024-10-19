@@ -6,7 +6,7 @@ using Novitas_Blog.Repositories;
 
 namespace Novitas_Blog.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminCategoryController : Controller
     {
         private readonly ICategoryRepository _categoryrepository;
@@ -34,11 +34,7 @@ namespace Novitas_Blog.Controllers
             };
 
             var createCategory = await _categoryrepository.AddAsync(newCategory);
-            if (createCategory != null)
-            {
-                return RedirectToAction("List");
-            }
-            return View();
+            return createCategory != null ? RedirectToAction("List") : View();
         }
         [HttpGet]
         public async Task<IActionResult> Edit(Guid Id)
@@ -65,21 +61,13 @@ namespace Novitas_Blog.Controllers
             };
             var updatedCategory = await _categoryrepository.UpdateAsync(category);
 
-            if (updatedCategory != null)
-            {
-                return RedirectToAction("List");
-            }
-            return View(null);
+            return updatedCategory != null ? RedirectToAction("List") : View(null);
         }
         [HttpPost]
         public async Task<IActionResult> Delete(Guid Id)
         {
             var category = await _categoryrepository.DeleteAsync(Id);
-            if (category != null)
-            {
-                return RedirectToAction("List");
-            }
-            return View();
+            return category != null ? RedirectToAction("List") : View();
         }
     }
 }

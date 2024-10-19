@@ -6,20 +6,20 @@
         <div class="row">
             @foreach (var article in Model)
             {
-                <div class="col-lg-6 col-md-12 box-shadow">
+                <div class="col-lg-6 col-md-12 col-12 box-shadow">
                     <div class="row align-items-center">
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
                             <div class="d-flex justify-content-between">
                                 <p class="author">@article.Author</p>
                                 <p class="timeString">@article.TimeString</p>
                             </div>
                             <img src="@article.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                             <p class="text-primary-emphasis fw-bold category">@article.Category.CategoryName.ToUpper()</p>
-                            <p class="text-secondary fw-bolder fs-5">@article.Title</p>
+                            <h4 class="text-secondary fw-bold">@article.Title</h4>
                         </div>
-                        <div class="col-2">
+                        <div class="col-sm-lg-2 col-md-2 col-sm-2 col-12">
                             <a class="btn btn-outline-secondary mb-1 box-shadow" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@article.Blog_Url">Read More</a>
                         </div>
                     </div>

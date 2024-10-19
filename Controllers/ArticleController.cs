@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Novitas_Blog.Models.Domain_Models;
 using Novitas_Blog.Models.View_Models;
@@ -6,6 +7,7 @@ using Novitas_Blog.Repositories;
 
 namespace Novitas_Blog.Controllers
 {
+    [AllowAnonymous]
     public class ArticleController : Controller
     {
         private readonly IBlogArticleRepository _blogArticleRepository;

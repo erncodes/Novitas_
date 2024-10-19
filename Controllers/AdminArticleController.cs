@@ -7,7 +7,7 @@ using Novitas_Blog.Repositories;
 
 namespace Novitas_Blog.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminArticleController : Controller
     {
         private readonly IBlogTagRepository _blogTagRepository;

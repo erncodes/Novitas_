@@ -14,7 +14,7 @@
                             <p class="text-primary-emphasis fw-bold category">@Model.Latest_Featured.Category.CategoryName.ToUpper()</p>
                             <p class="text-secondary fw-bolder fs-5">@Model.Latest_Featured.Title</p>
                             <div class="d-flex justify-content-between">
-                                <p class="author">@Model.Latest_Featured.Author</p>
+                                <p class="author text-primary">@Model.Latest_Featured.Author</p>
                                 <p class="timeString">@Model.Latest_Featured.TimeString</p>
                             </div>
                             <img src="@Model.Latest_Featured.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
@@ -34,7 +34,7 @@
                                         <p class="text-primary-emphasis fw-bold category">@featured.Category.CategoryName.ToUpper()</p>
                                         <p class="fw-bold title">@featured.Title</p>
                                         <div class="d-flex justify-content-between">
-                                            <p class="author">@featured.Author</p>
+                                            <p class="author text-primary">@featured.Author</p>
                                             <p class="timeString">@featured.TimeString</p>
                                         </div>
                                         <div class="last_four">
@@ -93,7 +93,7 @@
                                         <span class="text-primary-emphasis fw-bold category ">@article.Category.CategoryName.ToUpper()</span>
                                         <p class="title">@article.Title</p>
                                         <div class="d-flex justify-content-between">
-                                            <p class="author">@article.Author</p>
+                                            <p class="author text-primary">@article.Author</p>
                                             <p class="timeString">@article.TimeString</p>
                                         </div>
                                         <img src="@article.Featured_Image_Url" class="w-100 h-auto box-shadow" text="Image cap" />
@@ -151,7 +151,7 @@
                                             <p class="text-primary-emphasis fw-bold">@generalArticle.Category.CategoryName.ToUpper()</p>
                                             <p class="fw-bold text-secondary fs-5">@generalArticle.Title</p>
                                             <div class="d-flex justify-content-between">
-                                                <p class="author">@generalArticle.Author</p>
+                                                <p class="author text-primary">@generalArticle.Author</p>
                                                 <p class="timeString">@generalArticle.TimeString</p>
                                             </div>
                                             <img src="@generalArticle.Featured_Image_Url" class="w-100 h-auto" text="Image cap" />

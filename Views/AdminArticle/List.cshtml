@@ -37,7 +37,7 @@
                         <td class="text-center">@article.Published_Date.ToShortDateString()</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center">
-                                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-Id="@article.Id">Edit</a>
+                                <a class="btn btn-outline-dark" asp-action="Edit" asp-route-Id="@article.Id">Edit</a>
                                 <form method="post"  asp-controller="AdminArticle" asp-action="Delete" asp-route-Id="@article.Id">
                                     <button type="submit" class="btn btn-outline-danger ms-2">Delete</button>
                                 </form>

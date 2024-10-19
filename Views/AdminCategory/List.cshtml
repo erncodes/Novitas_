@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Novitas_Blog.Models.Domain_Models.Category>
 
-<div class="container bodycontainer">
-
+<div class="container bodycontainer pt-2">
     @if (Model != null && Model.Any())
     {
         <div class="my-3">
@@ -14,7 +13,7 @@
         </div>
         <div class="d-flex w-100 mb-3">
             <h4 class="fw-bolder">This Is A List Of Available Categories</h4>
-            <div class="m-lg-auto">
+            <div class="ms-auto">
                 <a asp-action="Add" class="btn btn-secondary w-auto">Create New Category</a>
             </div>
         </div>

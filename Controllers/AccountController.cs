@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Novitas_Blog.Models.View_Models;
 
 namespace Novitas_Blog.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -55,17 +57,20 @@ namespace Novitas_Blog.Controllers
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
             var loginResult = await _signInManager.PasswordSignInAsync(loginRequest.Username, loginRequest.Password, false, false);
-            if (loginResult.Succeeded)
-            {
-                return !string.IsNullOrWhiteSpace(loginRequest.ReturnUrl) ? Redirect(loginRequest.ReturnUrl) : RedirectToAction("Index", "Home");
-            }
-            return View();
+            return loginResult.Succeeded
+                ? !string.IsNullOrWhiteSpace(loginRequest.ReturnUrl) ? Redirect(loginRequest.ReturnUrl) : RedirectToAction("Index", "Home")
+                : View();
         }
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
         }
     }
 }

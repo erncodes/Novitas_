@@ -79,7 +79,7 @@ namespace Novitas_Blog.Repositories
             var articles = _novitasDBContext.Articles.Include(x => x.Category).Include(x => x.Blog_Tags).AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
-                articles = articles.Where(x => x.Category.CategoryName.Contains(searchQuery));
+                articles = articles.Where(x => x.Category.CategoryName.Contains(searchQuery) || x.Title.Contains(searchQuery));
             }
             return await articles.ToListAsync();
         }

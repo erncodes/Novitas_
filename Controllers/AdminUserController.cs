@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Novitas_Blog.Models.View_Models;
 using Novitas_Blog.Repositories;
 
 namespace Novitas_Blog.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminUserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -81,6 +83,8 @@ namespace Novitas_Blog.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid Id)
         {
             var user = await _userManager.FindByIdAsync(Id.ToString());

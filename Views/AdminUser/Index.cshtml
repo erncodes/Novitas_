@@ -1,5 +1,7 @@
 ﻿@model UserViewModel
-
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+@inject UserManager<IdentityUser> userManager;
 <div class="container bodycontainer">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createUserModal">
@@ -22,16 +24,15 @@
             </thead>
             <tbody>
                 @foreach (var user in Model.Users)
-
                 {
                     <tr>
                         <td>@user.UserId</td>
                         <td>@user.Username</td>
                         <td>@user.Email</td>
-                        <td>
-                            <a class="btn btn-primary" asp-action="Edit" asp-route-Id="@user.UserId">Edit</a>
+                        <td class="d-flex flex-row">
+                            <a class="btn btn-outline-dark" asp-action="Edit" asp-route-Id="@user.UserId"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
                             <form method="post" asp-controller="AdminUser" asp-action="Delete" asp-route-Id="@user.UserId">
-                                <button type="submit" class="btn btn-danger" asp-action="Delete" asp-route-Id="@user.UserId">Delete</button>
+                                <button type="submit" class="btn btn-outline-danger ms-1" asp-action="Delete" asp-route-Id="@user.UserId"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -41,7 +42,7 @@
     }
     else
     {
-        <h3>No Users Found!</h3>
+        <h3 class="fw-bold">No Users Found!</h3>
     }
 
     <!-- Modal -->
@@ -76,10 +77,13 @@
                             <input type="checkbox" class="form-check-input" id="isFeatured" asp-for="IsAdmin">
                             <label class="form-check-label" for="isFeatured">IsAdmin</label>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="isFeatured" asp-for="IsSuperAdmin">
-                            <label class="form-check-label" for="isFeatured">IsSuperAdmin</label>
-                        </div>
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="isFeatured" asp-for="IsSuperAdmin">
+                                <label class="form-check-label" for="isFeatured">IsSuperAdmin</label>
+                            </div>
+                        }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

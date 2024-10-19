@@ -7,7 +7,7 @@
             <h4 class="fw-bold align-self-start">@Model.MainArticle.Title</h4>
             <div class="col-lg-9 col-md-12 col-sm-12 col-12 mb-2">
                 <div class="d-flex justify-content-between">
-                    <p class="author">@Model.MainArticle.Author</p>
+                    <p class="author text-primary">@Model.MainArticle.Author</p>
                     <p class="timeString">@Model.MainArticle.TimeString</p>
                 </div>
                 <img src="@Model.MainArticle.Featured_Image_Url" class="img-fluid article" text="Image cap" />
@@ -15,9 +15,18 @@
             <div class="fr-view">
                 <h6 class="fw-bold">@Model.MainArticle.Description</h6>
                 <p>@Html.Raw(Model.MainArticle.Content)</p>
+                @if(Model.MainArticle.Blog_Tags != null)
+            {
+                <div class="row my-2">
+                    @foreach(var tag in Model.MainArticle.Blog_Tags)
+                {
+                    <a class="badge bg-dark p-2 w-auto ms-2" asp-action="Search" asp-route-searchQuery="@tag.Name">@tag.Name</a>
+                }
+                </div>
+            }
             </div>
             <div class="w-100">
-                @if (Model.Comments != null)
+                @if (Model.MainArticle.Comments != null && Model.MainArticle.Comments.Any())
                 {
                     <p>Comments</p>
 
@@ -56,7 +65,7 @@
                     {
                         <div class="my-3 border-bottom">
                             <h5 class="title">@article.Title</h5>
-                            <p class="author">@article.Author</p>
+                            <p class="author text-primary">@article.Author</p>
                             <img src="@article.Featured_Image_Url" width="100" height="180" class="card-img-top" text="Image cap">
                             <div class="">
                                 <p class="">@article.Description</p>
