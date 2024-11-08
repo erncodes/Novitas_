@@ -6,6 +6,8 @@ namespace Novitas_Blog.Repositories
     {
         public Task<IEnumerable<BlogArticle>> GetAllAsync(string? searchQuery);
         public Task<IEnumerable<BlogArticle>> GetAllByCategoryAsync(string? searchQuery);
+        public Task<IEnumerable<BlogArticle>> GetAllExistingBlogs();
+
         public Task<BlogArticle?> GetBlogByIdAsync(Guid Id);
         public Task<BlogArticle?> GetBlogByHandleAsync(String urlHandle);
         public Task<BlogArticle> AddAsync(BlogArticle blogArticle);

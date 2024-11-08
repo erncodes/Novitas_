@@ -66,21 +66,28 @@ namespace Novitas_Blog.Repositories
         }
         public async Task<IEnumerable<BlogArticle>> GetAllAsync(string? searchQuery)
         {
-            var articles = _novitasDBContext.Articles.Include(x => x.Category).Include(x => x.Blog_Tags).AsQueryable();
+            var articles = _novitasDBContext.Articles.Include(x => x.Category).Include(x => x.Comments).Include(x => x.Blog_Tags).AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 articles = articles.Where(x => x.Title.Contains(searchQuery)
                 || x.Category.CategoryName.Contains(searchQuery) || x.Blog_Tags.Any(x => x.Name.Contains(searchQuery)));
             }
-            return await articles.ToListAsync();
+            return articles != null ? await articles.ToListAsync() : (IEnumerable<BlogArticle>?)null;
         }
         public async Task<IEnumerable<BlogArticle>> GetAllByCategoryAsync(string? searchQuery)
         {
-            var articles = _novitasDBContext.Articles.Include(x => x.Category).Include(x => x.Blog_Tags).AsQueryable();
+            var articles = _novitasDBContext.Articles.Include(x => x.Category).Include(x => x.Comments).Include(x => x.Blog_Tags).AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 articles = articles.Where(x => x.Category.CategoryName.Contains(searchQuery) || x.Title.Contains(searchQuery));
             }
+            return await articles.ToListAsync();
+        }
+
+        public async Task<IEnumerable<BlogArticle>> GetAllExistingBlogs()
+        {
+            var articles = _novitasDBContext.Articles.Include(x => x.Category).Include(x => x.Comments).Include(x => x.Blog_Tags).AsQueryable();
+
             return await articles.ToListAsync();
         }
     }

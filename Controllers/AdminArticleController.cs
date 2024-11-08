@@ -149,9 +149,18 @@ namespace Novitas_Blog.Controllers
         [HttpGet]
         public async Task<IActionResult> List(string? searchQuery)
         {
+            var allArticles = await _blogArticleRepository.GetAllExistingBlogs();
             ViewBag.searchQuery = searchQuery;
-            var articles = await _blogArticleRepository.GetAllAsync(searchQuery);
-            return View(articles);
+            if (allArticles != null)
+            {
+                if (!string.IsNullOrWhiteSpace(searchQuery))
+                {
+                    var articles = await _blogArticleRepository.GetAllAsync(searchQuery);
+                    return articles != null ? View(articles) : (IActionResult)View();
+                }
+                return View(allArticles);
+            }
+            return View();
         }
     }
 }

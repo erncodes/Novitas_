@@ -12,10 +12,11 @@ namespace Novitas_Blog.Repositories
         {
             this._configuration = configuration;
 
-            _account = new Account(
-                     _configuration.GetSection("CloudinaryInfo")["CloudName"],
-                     _configuration.GetSection("CloudinaryInfo")["ApiKey"],
-                     _configuration.GetSection("CloudinaryInfo")["ApiSecret"]);
+            var CloudName = _configuration.GetSection("CloudName").Value;
+            var ApiKey = _configuration.GetSection("ApiKey").Value;
+            var ApiSecret = _configuration.GetSection("ApiSecret").Value;
+
+            _account = new Account(CloudName, ApiKey, ApiSecret);
         }
         public async Task<string> UploadAsync(IFormFile file)
         {

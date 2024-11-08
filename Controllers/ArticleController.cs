@@ -30,7 +30,7 @@ namespace Novitas_Blog.Controllers
             if (mainArticle != null)
             {
                 var allArticles = await _blogArticleRepository.GetAllAsync(null);
-                var relatedArticle = allArticles.Where(x => x.Category == mainArticle.Category && x.Id != mainArticle.Id).Take(4);
+                var relatedArticle = allArticles.Where(x => x.Category == mainArticle.Category && x.Id != mainArticle.Id).Take(6);
                 GetTimeArticle(mainArticle);
 
                 string shorternedDescription = "";

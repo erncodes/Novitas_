@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Novitas_Blog.Data;
@@ -19,14 +20,20 @@ namespace Novitas_Blog
             builder.Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
-            builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
-            builder.Services.AddScoped<IUserRepository,UserRepository>();
-            builder.Services.AddIdentity<IdentityUser,IdentityRole>(options =>
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 10;
                 options.Password.RequiredUniqueChars = 3;
             })
                 .AddEntityFrameworkStores<NovitasAuthDBContext>();
+            var keyVaultURL = new Uri(builder.Configuration.GetSection("KeyVaultURL").Value);
+            var azureVaultCredential = new DefaultAzureCredential();
+            builder.Configuration.AddAzureKeyVault(keyVaultURL, azureVaultCredential);
+
+            var syncFLicense = builder.Configuration.GetSection("SyncFusionLicenseKey").Value;
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncFLicense);
 
             var app = builder.Build();
 

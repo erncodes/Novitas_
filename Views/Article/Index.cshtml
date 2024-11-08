@@ -1,78 +1,113 @@
 ﻿@model ArticleDetailsViewModel
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> signInManager 
-<div class="container-fluid bodycontainer">
+@inject SignInManager<IdentityUser> signInManager
+<div class="container-fluid">
     <div class="row py-1">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-12 d-flex flex-column align-items-center ps-5 pt-2" id="main-article-content">
-            <h4 class="fw-bold align-self-start">@Model.MainArticle.Title</h4>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-12 d-flex flex-column ps-4 pe-2 py-2" id="main-article-content">
+            <p class="fw-bold align-self-start top-title col-9 ms-2">@Model.MainArticle.Title</p>
             <div class="col-lg-9 col-md-12 col-sm-12 col-12 mb-2">
-                <div class="d-flex justify-content-between">
-                    <p class="author text-primary">@Model.MainArticle.Author</p>
-                    <p class="timeString">@Model.MainArticle.TimeString</p>
+                <div class="d-flex justify-content-start">
+                    <p class="author text-primary me-3">@Model.MainArticle.Author</p>
+                    <p class="timeString ms-3">@Model.MainArticle.TimeString</p>
                 </div>
-                <img src="@Model.MainArticle.Featured_Image_Url" class="img-fluid article" text="Image cap" />
+                <img src="@Model.MainArticle.Featured_Image_Url" class="ms-1" style="max-height:450px;max-width:100%;" text="Image cap" />
             </div>
-            <div class="fr-view">
-                <h6 class="fw-bold">@Model.MainArticle.Description</h6>
-                <p>@Html.Raw(Model.MainArticle.Content)</p>
-                @if(Model.MainArticle.Blog_Tags != null)
-            {
-                <div class="row my-2">
-                    @foreach(var tag in Model.MainArticle.Blog_Tags)
+            <div class="fr-view px-2">
+                <p class="description">@Model.MainArticle.Description</p>
+                <p class="">@Html.Raw(Model.MainArticle.Content)</p>
+                @if (Model.MainArticle.Blog_Tags != null)
                 {
-                    <a class="badge bg-dark p-2 w-auto ms-2" asp-action="Search" asp-route-searchQuery="@tag.Name">@tag.Name</a>
+                    <div class="row my-2">
+                        @foreach (var tag in Model.MainArticle.Blog_Tags)
+                        {
+                            <a class="badge bg-dark p-2 w-auto ms-2" asp-action="Search" asp-route-searchQuery="@tag.Name">@tag.Name</a>
+                        }
+                    </div>
                 }
-                </div>
-            }
+                <hr>
             </div>
             <div class="w-100">
-                @if (Model.MainArticle.Comments != null && Model.MainArticle.Comments.Any())
+                @if (Model.Comments != null)
                 {
-                    <p>Comments</p>
+                    <div class="container">
+                        <h5 class="fw-bold">Comments (@Model.Comments.Count())</h5>
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <div class="row">
+                                <div class="col-2 d-flex justify-content-end">
+                                    <div class="img-comment">
+                                        <img src="/images/user-icon.png" alt="" class="user-icon" style="height: 60px; width: 60px;border-radius:50%;">
+                                    </div>
+                                </div>
+                                <div class="user-comment-content col-10">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="user-comment-name">
+                                            <a href="">@comment.UserName</a>
+                                        </span>
+                                        <span class="text-secondary">
+                                            <i class="fa fa-clock"></i>
+                                            @comment.DateAdded
+                                        </span>
+                                    </div>
+                                    <div class="col flex-grow-1 p-3 bg-secondary mb-2" style="border-radius: 0 10px 0 10px;">
+                                        <p class="text-white">
+                                            @comment.Descripton
+                                        </p>
+                                    </div>
 
-                    foreach (var comment in Model.Comments)
+                                </div>
+                            </div>
+
+                        }
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <form method="post" class="w-100 text-end">
+                                <div class="mb-3">
+                                    <input type="hidden" class="form-control" id="id" asp-for="@Model.MainArticle.Id">
+                                    <input type="hidden" class="form-control" id="url" asp-for="@Model.MainArticle.Blog_Url">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="comment" asp-for="@Model.Comment" placeholder="Comment"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-outline-dark mb-3">Submit</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <p class="fw-bold">Login to leave a comment</p>
+                                <a class="btn btn-outline-dark ms-2" asp-controller="Account" asp-action="Login" asp-route-ReturnUrl="/Article?urlHandle=@Model.MainArticle.Blog_Url">Login</a>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="fw-bold">No Comments Yet</p>
+                }
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+            <div class="card-group d-flex flex-column">
+                @if (Model.RelatedArticles != null)
+                {
+                    <h4 class="fw-bold text-primary-emphasis">Related articles</h4>
+                    foreach (var article in Model.RelatedArticles.Take(4))
                     {
-                        <p>@comment.UserName</p>
-                        <p>@comment.Descripton</p>
-                        <p>@comment.DateAdded</p>
+                        <div class="my-3 border-bottom">
+                            <p class="title fw-bold">@article.Title</p>
+                            <p class="author text-primary">@article.Author</p>
+                            <img src="@article.Featured_Image_Url" width="100" class="card-img-top mb-2" text="Image cap">
+                            <div class="">
+                                <a class="btn btn-outline-dark mb-2" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@article.Blog_Url">Read More</a>
+                            </div>
+                        </div>
                     }
                 }
                 else
                 {
-                    <p>No Comments Yet</p>
-                }
-            </div>
-            @if (signInManager.IsSignedIn(User) && Model.MainArticle != null)
-            {
-                <form method="post" class="w-100">
-                    <div class="mb-3">
-                        <input type="hidden" class="form-control" id="id" asp-for="@Model.MainArticle.Id">
-                        <input type="hidden" class="form-control" id="url" asp-for="@Model.MainArticle.Blog_Url">
+                    <div>
                     </div>
-                    <div class="mb-3">
-                        <textarea class="form-control" id="comment" asp-for="@Model.Comment" placeholder="Comment"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
-                </form>
-            }
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-12">
-            <h4>Related articles</h4>
-            <div class="card-group d-flex flex-column">
-                @if (Model.RelatedArticles != null)
-                {
-                    foreach (var article in Model.RelatedArticles.Take(4))
-                    {
-                        <div class="my-3 border-bottom">
-                            <h5 class="title">@article.Title</h5>
-                            <p class="author text-primary">@article.Author</p>
-                            <img src="@article.Featured_Image_Url" width="100" height="180" class="card-img-top" text="Image cap">
-                            <div class="">
-                                <p class="">@article.Description</p>
-                                <a class="btn btn-outline-secondary mb-2" asp-controller="Article" asp-action="Index" asp-route-urlHandle="@article.Blog_Url">Read More</a>
-                            </div>
-                        </div>
-                    }
                 }
             </div>
         </div>

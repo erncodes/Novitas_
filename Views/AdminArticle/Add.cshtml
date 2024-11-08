@@ -1,4 +1,6 @@
 ﻿@model CreateArticleRequest
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager;
 
 <div class="container bodycontainer">
     <div>
@@ -17,7 +19,9 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" id="content" asp-for="Content"></textarea>
+            <ejs-richtexteditor id="content" editorMode="HTML" ejs-for="Content">
+                <e-richtexteditor-insertimagesettings saveUrl="/api/Image"></e-richtexteditor-insertimagesettings>
+            </ejs-richtexteditor>
         </div>
         <div class="mb-3 form-floating">
             <input type="text" class="form-control" id="blog_url" asp-for="Blog_Url" required>
@@ -32,53 +36,53 @@
         <div class="mb-3 form-floating">
             <input type="text" class="form-control" id="featured_image_url" asp-for="Featured_Image_Url">
             <label for="featured_image_url" class="form-label">Featured_Image_Url</label>
+            <span class="text-danger fst-italic" asp-validation-for="Featured_Image_Url"></span>
         </div>
         <div class="mb-3 form-floating">
             <input type="text" class="form-control" id="author" asp-for="Author" required>
             <label for="author" class="form-label">Author</label>
             <span class="text-danger fst-italic" asp-validation-for="Author"></span>
         </div>
-        <div class="mb-3 form-check ">
-            <input type="checkbox" class="form-check-input" id="isVisible" asp-for="Is_Visible">
-            <label class="form-check-label" for="isVisible">Is Visible?</label>
-        </div>
-        <div class="mb-3 form-check ">
-            <input type="checkbox" class="form-check-input" id="isFeatured" asp-for="Is_Featured">
-            <label class="form-check-label" for="isFeatured">Add To Featured</label>
-        </div>
-        <div class="mb-3 form-check">
-            <label class="form-label">Category</label>
-            <select class="form-select" asp-items="@Model.Category" asp-for="Selected_Category" required>
-            </select>
-            <span class="text-danger fst-italic" asp-validation-for="Selected_Category"></span>
-        </div>
-        <div class="mb-3 form-check">
-            <label class="form-label">Tags</label>
-            <select multiple class="form-select" asp-items="@Model.Tags" asp-for="Selected_Tags">
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary" asp-action="Add">Submit</button>
-    </form>
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
+        {
+            <div class="mb-3 form-check ">
+                <input type="checkbox" class="form-check-input" id="isVisible" asp-for="Is_Visible">
+                <label class="form-check-label" for="isVisible">Is Visible?</label>
+            </div>
+        }
+            <div class="mb-3 form-check ">
+                <input type="checkbox" class="form-check-input" id="isFeatured" asp-for="Is_Featured">
+                <label class="form-check-label" for="isFeatured">Add To Featured</label>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-label">Category</label>
+                <select class="form-select" asp-items="@Model.Category" asp-for="Selected_Category" required>
+                </select>
+                <span class="text-danger fst-italic" asp-validation-for="Selected_Category"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <label class="form-label">Tags</label>
+                <select multiple class="form-select" asp-items="@Model.Tags" asp-for="Selected_Tags">
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" asp-action="Add">Submit</button>
+        </form>
 </div>
 @section Scripts{
     <script>
-      
-        var editor = new FroalaEditor("#content", {
-            imageUploadURL: '/api/Image',
-        });
-       
+
         let fileElement = document.getElementById("featured_image");
         let featuredImageUrl = document.getElementById("featured_image_url");
         let imageDisplay = document.getElementById("image_Display");
 
-        async function UploadImage(e){
+        async function UploadImage(e) {
             let data = new FormData();
             data.append('file', e.target.files[0]);
 
-            await fetch('/api/Image',{
+            await fetch('/api/Image', {
                 method: 'Post',
                 headers: {
-                    'Accept' : '*/*',
+                    'Accept': '*/*',
                 },
                 body: data
             }).then(response => response.json()).then(result => {

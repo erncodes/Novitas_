@@ -1,20 +1,20 @@
 ﻿@model IEnumerable<BlogArticle>
 
-<div class="container bodycontainer pt-2">
+<div class="container pt-2">
     @if (Model != null && Model.Any())
     {
         <div class="my-3">
             <form method="get" asp-controller="AdminArticle" asp-action="List">
                 <div class="d-flex align-items-center justify-content-around w-auto">
                     <input class="form-control me-2" name="searchQuery" placeholder="Search article title,tag or category" value="@ViewBag.searchQuery">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    <button class="btn btn-outline-dark" type="submit">Search</button>
                 </div>
             </form>
         </div>
         <div class="d-flex w-100 mb-3">
             <h4 class="fw-bolder">This Is A List Of Available Articles</h4>
             <div class="ms-auto">
-                <a asp-action="Add" class="btn btn-secondary w-auto">Create New Article</a>
+                <a asp-action="Add" class="btn btn-dark w-auto">Create New Article</a>
             </div>
         </div>
         <table class="table-bordered w-100">
@@ -61,7 +61,7 @@
         <div class="d-flex w-100 mb-3">
             <h4 class="fw-bolder">No Articles Found Containing The Term "@ViewBag.searchQuery"</h4>
             <div class="m-lg-auto">
-                <a asp-action="Add" class="btn btn-secondary w-auto">Create New Article</a>
+                <a asp-action="Add" class="btn btn-dark w-auto">Create New Article</a>
             </div>
         </div>
     }

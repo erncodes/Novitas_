@@ -1,29 +1,32 @@
 ﻿@model Novitas_Blog.Models.View_Models.UpdateArticleRequest
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager;
 
 <div class="container bodycontainer">
     <div>
-        <h3>Create A New Article For Your Blog</h3>
+        <h3>Edit Blog Post</h3>
     </div>
     <form method="post">
         <div class="mb-3">
             <label for="Id" class="form-label">ID</label>
-            <input type="text" disabled class="form-control" id="Id" asp-for="Id">
+            <input type="text" disabled class="form-control" value="@Model.Id" id="Id" asp-for="Id">
         </div>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" asp-for="Title">
+            <input type="text" class="form-control" id="title" value="@Model.Title" asp-for="Title">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" asp-for="Description">
+            <input type="text" class="form-control" id="description" value="@Model.Description" asp-for="Description">
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" id="content" asp-for="Content"></textarea>
+            <ejs-richtexteditor id="content" editorMode="HTML" value="@Model.Content" ejs-for="Content">
+            </ejs-richtexteditor>
         </div>
         <div class="mb-3">
             <label for="blog_url" class="form-label">Blog Url</label>
-            <input type="text" class="form-control" id="blog_url" asp-for="Blog_Url">
+            <input type="text" class="form-control" id="blog_url" value="@Model.Blog_Url" asp-for="Blog_Url">
         </div>
         <div class="mb-3">
             <label for="featured_image_url" class="form-label">Featured_Image</label>
@@ -39,33 +42,36 @@
         </div>
         <div class="mb-3">
             <label for="featured_image_url" class="form-label">Featured_Image_Url</label>
-            <input type="text" hidden class="form-control" id="featured_image_url" asp-for="Featured_Image_Url">
+            <input type="text" hidden class="form-control" id="featured_image_url" value="@Model.Featured_Image_Url" asp-for="Featured_Image_Url">
         </div>
         <div class="mb-3">
             <label for="author" class="form-label">Author</label>
-            <input type="text" class="form-control" id="author" asp-for="Author">
+            <input type="text" class="form-control" value="@Model.Author" id="author" asp-for="Author">
         </div>
         <div class="mb-3">
             <label for="published_date" class="form-label">Published_Date</label>
-            <input type="date" class="form-control" id="published_date" asp-for="Published_Date">
+            <input type="date" class="form-control" value="@Model.Published_Date" id="published_date" asp-for="Published_Date">
         </div>
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("SuperAdmin"))
+        {
+            <div class="mb-3 form-check ">
+                <input type="checkbox" class="form-check-input" id="isVisible" value="@Model.Is_Visible" asp-for="Is_Visible">
+                <label class="form-check-label" for="isVisible">Is Visible?</label>
+            </div>
+        }
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="isVisible" asp-for="Is_Visible">
-            <label class="form-check-label" for="isVisible">Is Visible?</label>
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="isFeatured" asp-for="Is_Featured">
+            <input type="checkbox" class="form-check-input" value="@Model.Is_Featured" id="isFeatured" asp-for="Is_Featured">
             <label class="form-check-label" for="isFeatured">Add To Featured</label>
         </div>
         <div class="mb-3 form-check">
             <label class="form-label">Category</label>
-            <select class="form-select" asp-items="@Model.Category" asp-for="Selected_Category" required>
+            <select class="form-select" value="@Model.Category" asp-items="@Model.Category" asp-for="Selected_Category" required>
             </select>
             <span class="text-danger fst-italic" asp-validation-for="Selected_Category"></span>
         </div>
         <div class="mb-3 form-check">
             <label class="form-label">Tags</label>
-            <select multiple class="form-select" asp-items="@Model.Tags" asp-for="Selected_Tags">
+            <select multiple class="form-select" value="@Model.Tags" asp-items="@Model.Tags" asp-for="Selected_Tags">
             </select>
         </div>
         <button type="submit" class="btn btn-primary" asp-action="Edit">Submit</button>
@@ -74,10 +80,6 @@
 
 @section Scripts{
     <script>
-        var editor = new FroalaEditor("#content", {
-            imageUploadURL: '/api/Image'
-        });
-
         let fileElement = document.getElementById("featured_image");
         let featuredImageUrl = document.getElementById("featured_image_url");
         let imageDisplay = document.getElementById("image_Display");
